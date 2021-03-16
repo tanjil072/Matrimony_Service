@@ -20,7 +20,8 @@ AS
 	A number;
 	dupConst EXCEPTION;
 	maximum number:=0;
-	temp number;
+	C number;
+	max2 NUMBER:=0;
 	
 	BEGIN
 		
@@ -46,7 +47,7 @@ AS
 			
 			commit;
 		
-		ELSIF maximum IS NOT NULL THEN
+		ELSE
 		
 			maximum:=maximum+1;
 				
@@ -57,23 +58,26 @@ AS
 			END IF;
 			
 			IF maximum>10 THEN
+				--DBMS_OUTPUT.PUT_LINE(maximum);
 				
-				insert into data1@site1 values(maximum,name,age,gender,religion,height,occupation,home_Town,language);
+				
+				FOR S IN (SELECT id FROM data1@site1) LOOP
+	
+					C:=S.id;
+					IF C>max2 THEN
+						max2:=C;
+				
+					END IF;
+		
+				END LOOP;
+				
+				insert into data1@site1 values(max2+1,name,age,gender,religion,height,occupation,home_Town,language);
 				commit;
 			
 			END IF;
 			
-			
-		 
-			--insert into data1@site1 values(A,name,age,gender);
-			--insert into data2@site2 values(A,religion,height,occupation,home_Town,language);
-			--commit;
-		
+
 		END IF;
-		
-		EXCEPTION 
-			WHEN DUP_VAL_ON_INDEX THEN
-				maximum:=maximum+1;
 	
 		
 	END Insert_Entry;
