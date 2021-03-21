@@ -13,7 +13,7 @@ DECLARE
 
 BEGIN
 
-	DBMS_OUTPUT.PUT_LINE('Insertion completed.');
+	DBMS_OUTPUT.PUT_LINE('Insertion complete.');
 
 END;
 /
@@ -33,6 +33,7 @@ DECLARE
 	H data1.home_Town%TYPE;
 	I data1.language%TYPE;
 
+
 BEGIN
 	A:=:OLD.id;
 	B:=:OLD.name;
@@ -45,7 +46,8 @@ BEGIN
 	I:=:OLD.language;
 	
 	INSERT INTO tempData values(A,B,C,D,E,F,G,H,I);
-	DBMS_OUTPUT.PUT_LINE('Successfully Updated.');
+	DBMS_OUTPUT.PUT_LINE('Successfully Updated Values For ID:'||A);
+
 
 
 END;
