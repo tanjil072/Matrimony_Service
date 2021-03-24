@@ -40,7 +40,8 @@ DECLARE
  /	
   
   
-  
+ --Taking all the inputs
+ 
 accept x NUMBER PROMPT 'Please Select an option from Section 1:'
 accept name1 char prompt 'Enter Name:'
 accept age1 number prompt 'Enter Age:'
@@ -79,13 +80,15 @@ DECLARE
 	
  BEGIN
 	
-	IF A<=0 OR A>5 OR searchOption<=0 OR searchOption>10 THEN
+	--Raise Exception if not valid option chosen
+	
+	IF A<=0 OR A>5 OR searchOption<=0 OR searchOption>13 THEN
 		RAISE noInput;
 	
 	END IF;
 	
 	
-     
+    --For INSERT
 	IF A = 1 THEN
 		
 		IF name is null or age<0 or gender is null or religion is null or height<0 or occupation is null or home_Town is null or language is null THEN
@@ -97,18 +100,22 @@ DECLARE
 		END IF;
 			
 	
-			
+	--For DELETE
 	ELSIF A = 2 THEN
 		
 		mypack.Delete_Entry(delete_id);
+	
+	--For UPDATE
 	ELSIF A = 3 THEN
 		
 		mypack.Upd(update_id,name,age,gender,religion,height,occupation,home_Town,language);
 		
+	--For Search
 	ELSIF A = 4 THEN
 	
 		mypack.Search_Entry(searchOption);
-		
+	
+	--For Showing Data
 	ELSIF A = 5 THEN
 		temp:=mypack.show();
 		
@@ -117,16 +124,15 @@ DECLARE
 	
 	
 
-	--Exception if no input given
+	--Exception if no input given or Value Error Or other Error
 	
 	EXCEPTION 
 		WHEN noInput THEN 
 			DBMS_OUTPUT.PUT_LINE('Please input Valid Data');
-			
 		WHEN VALUE_ERROR THEN
 			DBMS_OUTPUT.PUT_LINE('Please input Valid Data');
 		WHEN OTHERS THEN
-			DBMS_OUTPUT.PUT_LINE('Please input Valid Data');
+			DBMS_OUTPUT.PUT_LINE('Some Error Occured');
 	
 	
    END;

@@ -12,6 +12,8 @@ column home_Town format a10
 column language format a10
 
 
+--Declaring PACKAGE
+
 CREATE OR REPLACE PACKAGE mypack 
 AS 
 	PROCEDURE Insert_Entry(name in varchar2,age in integer,gender in varchar2,religion in varchar2,height in number,occupation in varchar2,home_Town in varchar2,language in varchar2);
@@ -23,6 +25,8 @@ AS
 END mypack; 
 /
 
+
+--Declaring Package Body
 
 CREATE OR REPLACE PACKAGE BODY mypack 
 AS 
@@ -98,8 +102,9 @@ AS
 		
 	END Insert_Entry;
 	
-	--Delete entry
 	
+	
+	--Delete entry
 	
 	PROCEDURE Delete_Entry(B IN NUMBER) IS
 	
@@ -133,12 +138,13 @@ AS
 		EXCEPTION
 			WHEN no_data_found THEN
 				DBMS_OUTPUT.PUT_LINE('Not Valid ID');
+			WHEN OTHERS THEN
+				DBMS_OUTPUT.PUT_LINE('Some Error Occured');
 		
 	END Delete_Entry;
 	
 	
 	--UPDATING value
-	
 	
 	PROCEDURE Upd(A in integer,name1 in varchar2,age1 in integer,gender1 in varchar2,religion1 in varchar2,height1 in number,occupation1 in varchar2,home_Town1 in varchar2,language1 in varchar2) IS
 	
@@ -176,7 +182,10 @@ AS
 		 insert into data1 values(A,name1,age1,gender1,religion1,height1,occupation1,home_Town1,language1);
 		 commit;
 	  WHEN no_data_found THEN
-				DBMS_OUTPUT.PUT_LINE('Not Valid ID');
+			DBMS_OUTPUT.PUT_LINE('Not Valid ID');
+			
+	  WHEN OTHERS THEN
+			DBMS_OUTPUT.PUT_LINE('Some Error Occured');
 	END Upd;
 	
 	
@@ -184,7 +193,6 @@ AS
 	
 	
 	--Searching 
-	
 	
 	
 	PROCEDURE Search_Entry(Options in number) IS
@@ -380,11 +388,13 @@ AS
 
 		RETURN 1;
 		
-		--Exception if no data found 
+	--Exception if no data found 
 	
 	EXCEPTION
-			WHEN NO_DATA_FOUND THEN
-				DBMS_OUTPUT.PUT_LINE('NO DATA FOUND');
+		WHEN NO_DATA_FOUND THEN
+			DBMS_OUTPUT.PUT_LINE('NO DATA FOUND');
+		WHEN OTHERS THEN
+			DBMS_OUTPUT.PUT_LINE('Some Error Occured');
 				
 	END show;
 	
